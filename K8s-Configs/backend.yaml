@@ -23,9 +23,23 @@ spec:
           - name: SPRING_DATASOURCE_URL
             value: "jdbc:postgresql://localhost:5432/validator_backend"
           - name: SPRING_DATASOURCE_USERNAME
-            value: jumia
+            valueFrom:
+              secretKeyRef:
+                name: postgress
+                key: username
           - name: SPRING_DATASOURCE_PASSWORD
-            value: jumia
+            valueFrom:
+              secretKeyRef:
+                name: postgress
+                key: password
+        resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
       imagePullSecrets:
         - name: docker-cred
 ---

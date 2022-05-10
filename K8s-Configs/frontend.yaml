@@ -16,6 +16,10 @@ spec:
       containers:
       - name: jumia-frontend-api
         image: dockub.coralpay.com/frontend:#{image-tag}#
+        resources:
+          limits:
+            memory: "300Mi"
+            cpu: "280m"        
         ports:
         - containerPort: 8081
           protocol: TCP
