@@ -3,10 +3,10 @@
   hosts: all
   become: true
 tasks:
-  - name: Deploy Pod
+  - name: Deploy Frontend
     shell: |
-      kubectl apply -f pod.yml
+      kubectl apply -f frontend.yaml
   
-  - name: Deploy Service
+  - name: Deploy Backend
     shell: | 
-      kubectl apply -f svc.yml
+      kubectl apply -f backend.yaml

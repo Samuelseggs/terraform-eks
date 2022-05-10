@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jumia-backend-api-deployment
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jumia-backend-api
+  template:
+    metadata:
+      labels:
+        app: jumia-backend-api
+    spec:
+      containers:
+      - name: jumia-backend-api
+        image: dockub.coralpay.com/backend:#{image-tag}#
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        env:
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:postgresql://localhost:5432/validator_backend"
+          - name: SPRING_DATASOURCE_USERNAME
+            value: jumia
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: jumia
+      imagePullSecrets:
+        - name: docker-cred
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jumia-backend-api-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: jumia-backend-api
+  ports:
+  - port: 8080
+    targetPort: 8080
