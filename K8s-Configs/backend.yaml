@@ -21,7 +21,10 @@ spec:
           protocol: TCP
         env:
           - name: SPRING_DATASOURCE_URL
-            value: "jdbc:postgresql://localhost:5432/validator_backend"
+            valueFrom:
+                configMapKeyRef:
+                  name: psql-config
+                  key: database_uri
           - name: SPRING_DATASOURCE_USERNAME
             valueFrom:
               secretKeyRef:
